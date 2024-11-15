@@ -1,31 +1,19 @@
-FROM node:16-alpine as builder
+FROM node:20-bookworm-slim as builder
 
-RUN apk update && apk add yarn curl bash python3 g++ make && rm -rf /var/cache/apk/*
-# Install node-prune
-RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
+# ENV HOST=0.0.0.0
+# ENV PORT=3000
+# ENV ORIGIN="https://www.sila.zone"
 
 WORKDIR /app
 
-COPY ./ ./
+COPY . .
 
-WORKDIR /app/api
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y openssl \
+    && npm install --frozen-lockfile --omit=dev \
+    # && ./node_modules/.bin/prisma generate \
+    && npm run build
 
-# Install dependencies
-RUN npm install
+EXPOSE 3000
 
-# Build application including libraries.
-RUN npm run build
-
-WORKDIR /app/api/build
-
-RUN npm install -g recursive-install
-RUN npm-recursive-install --production
-
-FROM node:16-alpine as production
-
-WORKDIR /app/api
-
-COPY --from=builder /app/api/build ./
-
-EXPOSE 8080
-CMD npm start
+CMD [ "node", "-r", "dotenv/config", "./api/dist/index.js" ]
