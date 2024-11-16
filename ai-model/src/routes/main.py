@@ -5,6 +5,8 @@ sys.path.append('./src/models')
 from inference import inference
 sys.path.append('./src/libs')
 from connection.connection import db
+from gaspricedb.main import keep_running
+import asyncio
 
 app = FastAPI()
 
@@ -23,10 +25,6 @@ async def read_users(days: int):
 
     return {"prediction": inference(days)}
 
-@root_router.get("/db", tags=["predict"])
-async def append_db():
-    print(db)
-    db.gas_price.insert_one({"name": "test"})
-    return {"message": "success"}
-
 app.include_router(root_router)
+
+asyncio.run(keep_running())
