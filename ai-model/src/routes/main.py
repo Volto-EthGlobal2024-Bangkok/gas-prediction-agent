@@ -3,6 +3,8 @@ import uvicorn
 import sys
 sys.path.append('./src/models')
 from inference import inference
+sys.path.append('./src/libs')
+from connection.connection import db
 
 app = FastAPI()
 
@@ -20,5 +22,11 @@ async def read_users(days: int):
         raise HTTPException(status_code=404, detail="Too many days")
 
     return {"prediction": inference(days)}
+
+@root_router.get("/db", tags=["predict"])
+async def append_db():
+    print(db)
+    db.gas_price.insert_one({"name": "test"})
+    return {"message": "success"}
 
 app.include_router(root_router)
