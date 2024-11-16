@@ -1,5 +1,7 @@
 import express, {NextFunction, Request, Response} from "express";
 
+import PredictionRouter from "./PredictionRouter";
+
 export function init(app: express.Application): void {
     const router: express.Router = express.Router();
     router.get(
@@ -13,6 +15,8 @@ export function init(app: express.Application): void {
             res.status(200).json({running: true});
         },
     );
+
+    router.use("/api/v1/predict", PredictionRouter);
 
     app.use(router);
 }
