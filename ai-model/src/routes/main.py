@@ -10,7 +10,8 @@ import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 sys.path.append('./src/scraper')
 from scraper import fetch_last_week
-
+from predict import load_model, predict
+import numpy as np
 
 app = FastAPI()
 
@@ -31,16 +32,22 @@ root_router = APIRouter(prefix="/api/v1", tags=["predict"])
 @root_router.get("/predict/{days}", tags=["predict"])
 async def read_users(days: int):
     days = int(days)
-    print(days)
+
     if days > 5:
         raise HTTPException(status_code=404, detail="Too many days")
 
-    return {"prediction": inference(days)}
+    prediction = await predict(model)
+    print(prediction)
+    return {"prediction": min(prediction.tolist())}
 
 @root_router.get("/startScraper", tags=["scraper"])
 async def start_scraper():
     fetch_last_week()
     return {"message": "Scraper started"}
 app.include_router(root_router)
+
+model = load_model()
+# predictions = predict(model)
+# print(predictions)
 
 # asyncio.run(keep_running())
