@@ -5,6 +5,8 @@ sys.path.append('./src/models')
 from inference import inference
 sys.path.append('./src/libs')
 from connection.connection import db
+from gaspricedb.main import keep_running
+import asyncio
 
 app = FastAPI()
 
@@ -30,3 +32,5 @@ async def append_db():
     return {"message": "success"}
 
 app.include_router(root_router)
+
+asyncio.run(keep_running())
