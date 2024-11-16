@@ -14,19 +14,19 @@ services:
     env_file: ./api/.env
     ports:
       - "6379:6379"
-  app:
-    depends_on:
-      - mongodb
-      - redis
-    build:
-      context: .
-      dockerfile: ./api/Dockerfile
-    restart: unless-stopped
-    env_file: ./api/.env
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_PORT=3000
+#  app:
+#    depends_on:
+#      - mongodb
+#      - redis
+#    build:
+#      context: .
+#      dockerfile: ./api/Dockerfile
+#    restart: unless-stopped
+#    env_file: ./api/.env
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      - NODE_PORT=3000
 #  ai-model:
 #    build:
 #      context: .

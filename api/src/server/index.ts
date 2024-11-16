@@ -1,6 +1,6 @@
 import http from "http";
 import {connectToDB} from "../libs/connection/connection";
-import {loadAppConfiguration} from "../libs/env/env";
+import {loadAppConfiguration} from "../libs/env";
 
 export async function startServer() {
     await loadAppConfiguration();

@@ -1,12 +1,11 @@
 import * as mongoose from "mongoose";
-import {getAppConfig} from "../env/env";
+import {getAppConfig} from "../env";
 
 let DB: mongoose.Connection;
 
 export async function connectToDB() {
     const config = getAppConfig();
-    console.log(config.mongo.MONGODB_URI);
-    const MONGO_URI: string = "mongodb://localhost:27017/productiondb?retryWrites=true&w=majority";
+    const MONGO_URI: string = config.mongo.MONGODB_URI;
 
     DB = mongoose.createConnection(MONGO_URI);
 
