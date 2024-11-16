@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "target": "es6",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "plugins": [
+      {
+        "name": "tslint-language-service"
+      }
+    ],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "lib": ["es2017", "ES2020.Promise"]
+  },
+  "include": [
+    "src/**/*",
+    "node_modules/@types/*"
+  ],
+  "exclude": ["node_modules", "setup_test.ts"]
+}
