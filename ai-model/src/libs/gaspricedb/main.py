@@ -25,10 +25,11 @@ def fetch_and_store_latest_block():
                 "block_number": latest_block["number"],
                 "timestamp": timestamp,
                 "gas_price_gwei": round(gas_price_gwei, 9),
+                "day": timestamp.split("T")[0],
             }
 
             # Insert into MongoDB
-            db.gas_price.insert_one(document)
+            db.gasprices.insert_one(document)
             print(f"Inserted latest block: {latest_block['number']} with gas price {gas_price_gwei:.9f} Gwei")
         else:
             print("Base fee per gas is unavailable in the latest block.")

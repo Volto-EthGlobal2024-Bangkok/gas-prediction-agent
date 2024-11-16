@@ -1,6 +1,7 @@
 import express, {NextFunction, Request, Response} from "express";
 
 import PredictionRouter from "./PredictionRouter";
+import GasRouter from "./GasRouter";
 
 export function init(app: express.Application): void {
     const router: express.Router = express.Router();
@@ -17,6 +18,8 @@ export function init(app: express.Application): void {
     );
 
     router.use("/api/v1/predict", PredictionRouter);
+
+    router.use("/api/v1/gas", GasRouter);
 
     app.use(router);
 }

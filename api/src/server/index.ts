@@ -1,11 +1,14 @@
 import http from "http";
-import {connectToDB} from "../libs/connection/connection";
+import {connectToDB, getConnection} from "../libs/connection/connection";
 import {loadAppConfiguration} from "../libs/env";
+import {runModels} from "../services";
 
 export async function startServer() {
     await loadAppConfiguration();
 
     await connectToDB();
+
+    await runModels(getConnection());
 
     const serverImport = await import("./server");
     const server = await serverImport.default();

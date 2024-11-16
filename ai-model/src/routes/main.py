@@ -7,6 +7,9 @@ sys.path.append('./src/libs')
 from connection.connection import db
 from gaspricedb.main import keep_running
 import asyncio
+sys.path.append('./src/scraper')
+from scraper import fetch_last_week
+
 
 app = FastAPI()
 
@@ -25,6 +28,10 @@ async def read_users(days: int):
 
     return {"prediction": inference(days)}
 
+@root_router.get("/startScraper", tags=["scraper"])
+async def start_scraper():
+    fetch_last_week()
+    return {"message": "Scraper started"}
 app.include_router(root_router)
 
-asyncio.run(keep_running())
+# asyncio.run(keep_running())
