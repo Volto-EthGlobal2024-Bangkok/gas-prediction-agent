@@ -7,11 +7,20 @@ sys.path.append('./src/libs')
 from connection.connection import db
 from gaspricedb.main import keep_running
 import asyncio
+from fastapi.middleware.cors import CORSMiddleware
 sys.path.append('./src/scraper')
 from scraper import fetch_last_week
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,  # Allow cookies
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 @app.get("/health")
 async def root():
