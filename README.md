@@ -15,5 +15,5 @@ cd api && npm install && npm run build && npm start
 Install `fastapi` and `uvicorn`.
 
 ```bash
-fastapi dev ./src/routes/main.py
+fastapi dev ./src/routes/env.py
 ```

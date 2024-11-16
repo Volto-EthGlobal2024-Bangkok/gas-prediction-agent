@@ -7,6 +7,8 @@ sys.path.append('./src/libs')
 from connection.connection import db
 from web3 import Web3
 
+from env.env import INFURA_KEY
+
 INFURA_URL = "https://mainnet.infura.io/v3/" + INFURA_KEY  # Replace with your Infura project ID
 web3 = Web3(Web3.HTTPProvider(INFURA_URL))
 
